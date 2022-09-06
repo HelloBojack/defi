@@ -25,10 +25,19 @@ export const Header = () => {
   return (
     <div className="h-[64px] max-auto flex items-center justify-center border-b border-b-white/10">
       <Container className="flex items-center justify-between">
-        <div className="text-[22px] font-bold">DeFiLogo</div>
+        <Link
+          className="text-[22px] font-bold transition-all duration-300 hover:opacity-80 hover:text-[color:inherit]"
+          to="/"
+        >
+          DeFiLogo
+        </Link>
         <div className="flex items-center space-x-[30px]">
           {ROUTES.map((route) => (
-            <Link to={route.to} key={route.name} className="font-semibold">
+            <Link
+              to={route.to}
+              key={route.name}
+              className="font-semibold transition-all duration-300 hover:opacity-80 hover:text-[color:inherit]"
+            >
               {route.name}
             </Link>
           ))}
