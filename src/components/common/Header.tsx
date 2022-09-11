@@ -4,19 +4,19 @@ import { Container } from "./Container";
 
 const ROUTES = [
   {
-    name: "learn",
+    name: "Learn",
     to: "/learn",
   },
   {
-    name: "governance",
+    name: "Governance",
     to: "/governance",
   },
   {
-    name: "about",
+    name: "About",
     to: "/about",
   },
   {
-    name: "dashboard",
+    name: "Dashboard",
     to: "/dashboard",
   },
 ];
