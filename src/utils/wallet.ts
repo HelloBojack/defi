@@ -1,4 +1,4 @@
-import Web3Modal from "web3modal";
+import Web3Modal, { getProviderInfo } from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers, providers } from "ethers";
 import { store } from "../store";
@@ -21,7 +21,17 @@ const web3Modal = new Web3Modal({
 
 export const connectWallet = async () => {
   const provider = await web3Modal.connect();
+  const providerInfo = getProviderInfo(provider);
   const ethersProvider = new providers.Web3Provider(provider);
+  const chainId = (await ethersProvider.getNetwork()).chainId;
   const address = await ethersProvider.getSigner().getAddress();
-  store.dispatch(setWallet(address));
+
+  store.dispatch(
+    setWallet({
+      name: providerInfo.name,
+      logo: providerInfo.logo,
+      chainId,
+      address,
+    })
+  );
 };

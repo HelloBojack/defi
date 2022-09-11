@@ -3,14 +3,21 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 import { RootState } from "..";
 
+interface WalletState {
+  name: string;
+  logo: string;
+  address: string;
+  chainId: number;
+}
+
 export const walletSlice = createSlice({
   name: "wallet",
   initialState: {
-    address: "",
+    value: undefined as WalletState | undefined,
   },
   reducers: {
-    setWallet: (state, action: PayloadAction<string>) => {
-      state.address = action.payload;
+    setWallet: (state, action: PayloadAction<WalletState | undefined>) => {
+      state.value = action.payload;
     },
   },
 });
@@ -18,6 +25,6 @@ export const walletSlice = createSlice({
 export const { setWallet } = walletSlice.actions;
 
 export const useWallet = () =>
-  useSelector((state: RootState) => state.wallet.address);
+  useSelector((state: RootState) => state.wallet.value);
 
 export default walletSlice.reducer;
