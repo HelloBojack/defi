@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import { useWallet } from "../../store/slices/wallet";
-import { connectWallet } from "../../utils/wallet";
+import { connectWallet, initWallet } from "../../utils/wallet";
 import { Button } from "../base/Button";
 
 enum SupportedChainId {
@@ -27,11 +28,15 @@ function shortenAddress(address: string, chars = 4): string {
 
 export const Wallets = () => {
   const wallet = useWallet();
-  console.log(wallet);
+
+  useEffect(() => {
+    initWallet();
+  }, []);
+
   return (
     <>
       {wallet ? (
-        <div className="flex font-semibold">
+        <div className="flex font-semibold" onClick={() => console.log(wallet)}>
           <div className="bg-gray2 rounded-full px-[20px] h-[34px] leading-[34px]">
             {getChainNameFromId(wallet.chainId)}
           </div>

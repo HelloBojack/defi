@@ -19,12 +19,33 @@ const web3Modal = new Web3Modal({
   cacheProvider: true,
 });
 
+export const initWallet = () => {
+  if (web3Modal.cachedProvider) {
+    connectWallet();
+  }
+};
+
+const addWalletListeners = (web3ModalProvider: providers.Web3Provider) => {
+  web3ModalProvider
+    .on("accountsChanged", () => {
+      window.location.reload();
+    })
+    .on("chainChanged", () => {
+      window.location.reload();
+    })
+    .on("disconnect", () => {
+      window.location.reload();
+    });
+};
+
 export const connectWallet = async () => {
   const provider = await web3Modal.connect();
   const providerInfo = getProviderInfo(provider);
   const ethersProvider = new providers.Web3Provider(provider);
   const chainId = (await ethersProvider.getNetwork()).chainId;
   const address = await ethersProvider.getSigner().getAddress();
+
+  addWalletListeners(provider);
 
   store.dispatch(
     setWallet({
