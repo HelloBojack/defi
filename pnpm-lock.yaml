@@ -12,6 +12,7 @@ specifiers:
   autoprefixer: ^10.4.8
   browserify-zlib: ^0.2.0
   buffer: ^6.0.3
+  clipboard-copy: ^4.0.1
   ethers: ^5.7.0
   events: ^3.3.0
   postcss: ^8.4.16
@@ -33,6 +34,7 @@ dependencies:
   '@reduxjs/toolkit': 1.8.5_kkwg4cbsojnjnupd3btipussee
   '@walletconnect/web3-provider': 1.8.0_@babel+core@7.19.0
   antd: 4.23.0_biqbaboplfbrettd7655fr4n2y
+  clipboard-copy: 4.0.1
   ethers: 5.7.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -1554,6 +1556,10 @@ packages:
 
   /classnames/2.3.1:
     resolution: {integrity: sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==}
+    dev: false
+
+  /clipboard-copy/4.0.1:
+    resolution: {integrity: sha512-wOlqdqziE/NNTUJsfSgXmBMIrYmfd5V0HCGsR8uAKHcg+h9NENWINcfRjtWGU77wDHC8B8ijV4hMTGYbrKovng==}
     dev: false
 
   /cliui/5.0.0:

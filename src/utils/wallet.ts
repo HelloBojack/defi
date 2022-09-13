@@ -1,6 +1,6 @@
 import Web3Modal, { getProviderInfo } from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import { ethers, providers } from "ethers";
+import { providers } from "ethers";
 import { store } from "../store";
 import { setWallet } from "../store/slices/wallet";
 
@@ -55,4 +55,9 @@ export const connectWallet = async () => {
       address,
     })
   );
+};
+
+export const disconnectWallet = () => {
+  web3Modal.clearCachedProvider();
+  store.dispatch(setWallet(undefined));
 };

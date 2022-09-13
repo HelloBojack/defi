@@ -11,7 +11,7 @@ export const Button = forwardRef<ComponentRef<"button">, Props>(
   (
     {
       className,
-      type,
+      type = "unstyled",
       size = "sm",
       color = "red",
       loading,
@@ -31,15 +31,26 @@ export const Button = forwardRef<ComponentRef<"button">, Props>(
     }
     switch (size) {
       case "xs":
-        baseClassName += /*tw:*/ " h-[30px] border px-[16px] text-[12px]";
+        baseClassName += " h-[30px] border px-[16px] text-[12px]";
         break;
       case "sm":
-        baseClassName += /*tw:*/ " h-[34px] border px-[16px] text-[12px]";
+        baseClassName += " h-[34px] border px-[16px] text-[12px]";
+        break;
+    }
+    switch (type) {
+      case "unstyled":
+        baseClassName +=
+          " h-auto rounded-none border-0 bg-transparent px-0 text-[length:inherit] font-[number:inherit] text-[color:inherit]";
         break;
     }
 
     return (
-      <button ref={ref} className={baseClassName} type="button" {...props}>
+      <button
+        ref={ref}
+        className={`${baseClassName} ${className}`}
+        type="button"
+        {...props}
+      >
         {children}
       </button>
     );
