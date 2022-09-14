@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import svgr from "vite-plugin-svgr";
 import nodePolyfills from "rollup-plugin-polyfill-node";
 import polyfillNode from "rollup-plugin-polyfill-node";
 
@@ -16,6 +17,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    svgr(),
     polyfillNode(),
     react(),
     !production &&

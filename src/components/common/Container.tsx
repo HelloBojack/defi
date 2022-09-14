@@ -5,6 +5,9 @@ export const Container: FC<ComponentProps<"div">> = ({
   ...props
 }) => {
   return (
-    <div className={`w-full max-w-[1140px] mx-auto ${className}`} {...props} />
+    <div
+      className={`w-full max-w-[1140px] mx-auto px-[20px] ${className}`}
+      {...props}
+    />
   );
 };
