@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../base/Button";
 import { Container } from "../common/Container";
 import { ReactComponent as ArrowRight } from "../../assets/arrow-right.svg";
+import { CatLogo } from "./CatLogo";
 
 export const Banner = () => {
   const navigate = useNavigate();
@@ -33,7 +34,9 @@ export const Banner = () => {
           </Button>
         </div>
       </div>
-      <div className="h-[360px] w-[360px] shrink-0"></div>
+      <div className="h-[360px] w-[360px] shrink-0">
+        <CatLogo></CatLogo>
+      </div>
     </Container>
   );
 };
