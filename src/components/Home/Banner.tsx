@@ -34,9 +34,8 @@ export const Banner = () => {
           </Button>
         </div>
       </div>
-      <div className="h-[360px] w-[360px] shrink-0">
-        <CatLogo></CatLogo>
-      </div>
+
+      <CatLogo />
     </Container>
   );
 };
