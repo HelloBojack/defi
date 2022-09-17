@@ -4,11 +4,12 @@ import github from "../../assets/images/mediums/github.svg";
 import reddit from "../../assets/images/mediums/reddit.svg";
 import telegram from "../../assets/images/mediums/telegram.svg";
 import twitter from "../../assets/images/mediums/twitter.svg";
+import { classNames } from "../../utils/classNames";
 import { Container } from "./Container";
 
 export const Footer: FC<ComponentProps<"div">> = ({ className, ...props }) => {
   return (
-    <Container className={`flex pb-[47px] ${className}`} {...props}>
+    <Container className={classNames("flex pb-[47px]", className)} {...props}>
       <div className="grow">
         <div className="font-tmr text-[22px]">HedgeCat</div>
         <div className="mt-[10px] text-[13px] text-white/60">

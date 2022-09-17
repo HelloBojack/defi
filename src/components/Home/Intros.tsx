@@ -2,11 +2,12 @@ import { ComponentProps } from "react";
 import flyingCoins from "../../assets/images/intros/flying-coins.png";
 import mining from "../../assets/images/intros/mining.png";
 import rocket from "../../assets/images/intros/rocket.png";
+import { classNames } from "../../utils/classNames";
 import { Container } from "../common/Container";
 
 export const Intros = ({ className }: ComponentProps<"div">) => {
   return (
-    <Container className={`space-y-[120px] ${className}`}>
+    <Container className={classNames("space-y-[120px]", className)}>
       <div className="flex items-center justify-evenly">
         <div className="max-w-[50%]">
           <div className="text-[36px] font-semibold">

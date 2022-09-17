@@ -1,4 +1,5 @@
 import { ComponentProps, ComponentRef, forwardRef } from "react";
+import { classNames } from "../../utils/classNames";
 
 interface Props extends Omit<ComponentProps<"button">, "type"> {
   type?: "filled" | "outline" | "plain" | "unstyled";
@@ -80,10 +81,7 @@ export const Button = forwardRef<ComponentRef<"button">, Props>(
     return (
       <button
         ref={ref}
-        className={`
-          ${baseClassName}
-          ${className}
-          `}
+        className={classNames(baseClassName, className)}
         type="button"
         disabled={loading || disabled}
         {...props}
