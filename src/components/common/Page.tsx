@@ -1,4 +1,5 @@
 import { ComponentProps } from "react";
+import { Footer } from "./Footer";
 import { Header } from "./Header";
 
 export const Page = ({ children }: ComponentProps<"div">) => {
@@ -6,6 +7,7 @@ export const Page = ({ children }: ComponentProps<"div">) => {
     <div className="flex min-w-[1440px] grow flex-col">
       <Header />
       <div className="grow">{children}</div>
+      <Footer />
     </div>
   );
 };

@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-a:hover {
-  color: invalid;
+body {
+  @apply m-0 bg-black font-sans text-[14px] leading-normal text-white antialiased [overflow-wrap:anywhere];
 }

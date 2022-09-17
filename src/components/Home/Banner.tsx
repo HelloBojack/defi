@@ -8,7 +8,7 @@ export const Banner = () => {
   const navigate = useNavigate();
 
   return (
-    <Container className="flex justify-center items-center pt-[100px]">
+    <Container className="flex justify-center items-center">
       <div>
         <div className="text-[46px] font-semibold">
           AMM Based Margin Trading Protocol for
