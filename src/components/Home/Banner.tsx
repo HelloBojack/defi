@@ -15,7 +15,7 @@ export const Banner = () => {
           <span className="text-red"> Web3</span>
         </div>
         <div className="mt-[70px] ">
-          <Button type="filled" size="2xl" onClick={() => navigate("/trading")}>
+          <Button type="filled" size="2xl" onClick={() => navigate("/trade")}>
             <div>Start Trading</div>
             <ArrowRight className="ml-[64px]" />
           </Button>
