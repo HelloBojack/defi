@@ -1,6 +1,6 @@
 import { Navigate, BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home } from "./components/Home";
-import { Trade } from "./components/trade";
+import { Trade } from "./components/Trade";
 
 function App() {
   return (
