@@ -38,10 +38,19 @@ const addWalletListeners = (web3ModalProvider: providers.Web3Provider) => {
     });
 };
 
+let _provider: providers.ExternalProvider;
+
+export function getProvider(): providers.Web3Provider {
+  console.log("_provider", _provider);
+
+  return new providers.Web3Provider(_provider);
+}
+
 export const connectWallet = async () => {
   const provider = await web3Modal.connect();
+  _provider = provider;
   const providerInfo = getProviderInfo(provider);
-  const ethersProvider = new providers.Web3Provider(provider);
+  const ethersProvider = getProvider();
   const chainId = (await ethersProvider.getNetwork()).chainId;
   const address = await ethersProvider.getSigner().getAddress();
 

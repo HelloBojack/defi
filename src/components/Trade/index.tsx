@@ -1,10 +1,11 @@
-import { useGetBlockNumberQuery } from "../../store/apis/hedgeGraph";
+import { useGetBlockNumberQuery } from "../../store/apis/providerSlice";
 import { Page } from "../common/Page";
 import { LiquidityMarket } from "./LiquidityMarket";
 
 export const Trade = () => {
-  const { currentData: blockNumber } = useGetBlockNumberQuery();
-  console.log(blockNumber);
+  const { currentData: blockNumber } = useGetBlockNumberQuery(undefined, {
+    pollingInterval: 10_000,
+  });
 
   return (
     <Page>
