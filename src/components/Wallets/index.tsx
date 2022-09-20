@@ -1,9 +1,14 @@
 import { Popover } from "antd";
 import copy from "../../assets/copy.svg";
-import { connectWallet, disconnectWallet } from "../../utils/wallet";
+import {
+  connectWallet,
+  disconnectWallet,
+  metaMask,
+  Web3ReactHooks,
+} from "../../utils/wallet";
 import { Button } from "../base/Button";
 import { copyText } from "../../utils/copyText";
-import { Web3ReactHooks } from "../../utils/wallet";
+import { useEffect } from "react";
 
 enum SupportedChainId {
   MAINNET = 1,
@@ -34,6 +39,13 @@ export const Wallets = () => {
   const chainId = useChainId();
   const accounts = useAccounts();
   const address = accounts && accounts.length !== 0 ? accounts[0] : "";
+
+  useEffect(() => {
+    metaMask.connectEagerly().catch(() => {
+      console.debug("Failed to connect eagerly to walletconnect");
+    });
+  }, []);
+
   return (
     <>
       {isActive ? (
