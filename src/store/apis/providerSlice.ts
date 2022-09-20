@@ -1,6 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { BaseQueryFn } from "@reduxjs/toolkit/query";
-import { getProvider } from "../../utils/wallet";
 
 export interface ProviderQueryArgs {
   method: string;
@@ -11,7 +10,7 @@ function providerBaseQuery(): BaseQueryFn<ProviderQueryArgs> {
   return async ({ method, args }) => {
     try {
       return {
-        data: await (getProvider() as any)[method](),
+        data: {},
         meta: {},
       };
     } catch (error) {
