@@ -1,10 +1,9 @@
 import { Popover } from "antd";
-import { useWallet } from "../../store/slices/wallet";
 import copy from "../../assets/copy.svg";
 import { connectWallet, disconnectWallet } from "../../utils/wallet";
 import { Button } from "../base/Button";
 import { copyText } from "../../utils/copyText";
-import { Web3ReactHooks, Web3ReactStore } from "../../utils/wallet";
+import { Web3ReactHooks } from "../../utils/wallet";
 
 enum SupportedChainId {
   MAINNET = 1,
@@ -30,15 +29,7 @@ function shortenAddress(address: string, chars = 4): string {
 }
 
 export const Wallets = () => {
-  const wallet = useWallet();
-  const {
-    useChainId,
-    useAccounts,
-    useIsActivating,
-    useIsActive,
-    useProvider,
-    useENSNames,
-  } = Web3ReactHooks;
+  const { useChainId, useAccounts, useIsActive } = Web3ReactHooks;
   const isActive = useIsActive();
   const chainId = useChainId();
   const accounts = useAccounts();
