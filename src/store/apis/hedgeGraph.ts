@@ -57,5 +57,3 @@ export const hedgeGraphApi = createApi({
     }),
   }),
 });
-
-export const { useGetBlockNumberQuery } = hedgeGraphApi;
