@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ahooksjs/use-url-state": "^3.5.0",
     "@react-three/drei": "^9.30.3",
     "@react-three/fiber": "^8.7.4",
     "@reduxjs/toolkit": "^1.8.5",

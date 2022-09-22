@@ -7,6 +7,7 @@ import {
   RequestDocument,
   Variables,
 } from "graphql-request";
+import { DepositedLiquidity } from "../../utils/types";
 
 export interface GraphqlRequestBaseQueryArgs {
   document: RequestDocument;
@@ -41,19 +42,103 @@ export const hedgeGraphApi = createApi({
     url: "https://api.thegraph.com/subgraphs/name/prodog/hedge-cat-rinkeby",
   }),
   endpoints: (builder) => ({
-    getBlockNumber: builder.query<number, void>({
-      query: () => ({
+    getDepositedLiquidities: builder.query<
+      DepositedLiquidity[],
+      {
+        marketIds?: string[];
+        provider?: string;
+        liquidityIds?: string[];
+        skip?: number;
+        limit?: number;
+        availableOnly?: boolean;
+        blockNumber?: number;
+        orderBy?: string;
+        orderDirection?: "asc" | "desc";
+      }
+    >({
+      query: ({
+        marketIds,
+        provider,
+        liquidityIds,
+        skip,
+        limit,
+        availableOnly,
+        blockNumber,
+        orderBy,
+        orderDirection,
+      }) => ({
         document: gql`
-          query getBlockNumber {
-            blockNumber: _meta @_(get: "block.number") {
-              block {
-                number
+          query getDepositedLiquidities(
+            $filter: LiquidityInfo_filter
+            $skip: Int
+            $first: Int
+            $orderBy: String
+            $orderDirection: String
+          ) {
+            depositedLiquidities: liquidityInfos(
+              where: $filter
+              skip: $skip
+              first: $first
+              orderBy: $orderBy
+              orderDirection: $orderDirection
+            ) {
+              id
+              owner: hedgePool @_(get: "id") {
+                id
               }
+              poolId: hedgePool @_(get: "uniPool") {
+                uniPool
+              }
+              lowerTick: tickLower
+              upperTick: tickUpper
+              amount: allLiquidity
+              marketId: hedgePool @_(get: "id") {
+                id
+              }
+              provider: liquidityProvider
+              depositBlock
+              endBlock: deadline
+              feeToken: feeAsset {
+                id
+                symbol
+                decimals
+              }
+              feePer1e6Block: feeAmount
+              remainingAmount: remainingLiquidity
+              positionsCount: currentPositions
+              receivedFee: feeReceived
+              claimedFee: feeClaimed
+              paused: isOpen
             }
           }
         `,
+        variables: {
+          filter: {
+            hedgePool_in: marketIds,
+            liquidityProvider: provider,
+            id_in: liquidityIds,
+            ...(availableOnly === true && {
+              isOpen: true,
+              deadline_gt: blockNumber,
+              tickLower_gt: -887220,
+              tickUpper_lt: 887220,
+            }),
+          },
+          skip,
+          first: limit,
+          orderBy:
+            orderBy ??
+            (provider != undefined ? "depositValueUSD" : "remainingValueUSD"),
+          orderDirection: orderDirection ?? "desc",
+        },
       }),
-      transformResponse: (result: any) => result.blockNumber,
+      transformResponse: (result: any) =>
+        result.depositedLiquidities.map((item: any) => ({
+          ...item,
+          paused: item.paused !== true,
+        })),
     }),
   }),
 });
+
+export const { useGetDepositedLiquiditiesQuery } = hedgeGraphApi;
