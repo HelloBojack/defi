@@ -178,5 +178,8 @@ export const hedgeGraphApi = createApi({
   }),
 });
 
-export const { useGetMarketsQuery, useGetDepositedLiquiditiesQuery } =
-  hedgeGraphApi;
+export const {
+  useGetSupportedTokensQuery,
+  useGetMarketsQuery,
+  useGetDepositedLiquiditiesQuery,
+} = hedgeGraphApi;
