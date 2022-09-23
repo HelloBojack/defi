@@ -7,7 +7,7 @@ import {
   RequestDocument,
   Variables,
 } from "graphql-request";
-import { DepositedLiquidity } from "../../utils/types";
+import { DepositedLiquidity, Market, SupportedToken } from "../../utils/types";
 
 export interface GraphqlRequestBaseQueryArgs {
   document: RequestDocument;
@@ -42,6 +42,47 @@ export const hedgeGraphApi = createApi({
     url: "https://api.thegraph.com/subgraphs/name/prodog/hedge-cat-rinkeby",
   }),
   endpoints: (builder) => ({
+    getSupportedTokens: builder.query<SupportedToken[], void>({
+      query: () => ({
+        document: gql`
+          query getSupportedTokens($filter: Token_filter) {
+            supportedTokens: tokens(where: $filter) {
+              id
+              symbol
+              decimals
+              usdPoolId: USDPool
+            }
+          }
+        `,
+      }),
+      transformResponse: (result: any) => result.supportedTokens,
+    }),
+
+    getMarkets: builder.query<Market[], void>({
+      query: () => ({
+        document: gql`
+          query getMarkets($filter: HedgePool_filter) {
+            markets: hedgePools(where: $filter) {
+              token0 {
+                id
+                symbol
+                decimals
+              }
+              token1 {
+                id
+                symbol
+                decimals
+              }
+              id
+              poolId: uniPool
+              feeTier: fee
+            }
+          }
+        `,
+      }),
+      transformResponse: (result: any) => result.markets,
+    }),
+
     getDepositedLiquidities: builder.query<
       DepositedLiquidity[],
       {
@@ -50,7 +91,6 @@ export const hedgeGraphApi = createApi({
         liquidityIds?: string[];
         skip?: number;
         limit?: number;
-        availableOnly?: boolean;
         blockNumber?: number;
         orderBy?: string;
         orderDirection?: "asc" | "desc";
@@ -62,7 +102,6 @@ export const hedgeGraphApi = createApi({
         liquidityIds,
         skip,
         limit,
-        availableOnly,
         blockNumber,
         orderBy,
         orderDirection,
@@ -117,12 +156,10 @@ export const hedgeGraphApi = createApi({
             hedgePool_in: marketIds,
             liquidityProvider: provider,
             id_in: liquidityIds,
-            ...(availableOnly === true && {
-              isOpen: true,
-              deadline_gt: blockNumber,
-              tickLower_gt: -887220,
-              tickUpper_lt: 887220,
-            }),
+            isOpen: true,
+            deadline_gt: blockNumber,
+            tickLower_gt: -887220,
+            tickUpper_lt: 887220,
           },
           skip,
           first: limit,
@@ -141,4 +178,5 @@ export const hedgeGraphApi = createApi({
   }),
 });
 
-export const { useGetDepositedLiquiditiesQuery } = hedgeGraphApi;
+export const { useGetMarketsQuery, useGetDepositedLiquiditiesQuery } =
+  hedgeGraphApi;

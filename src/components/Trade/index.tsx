@@ -9,15 +9,11 @@ export const Trade = () => {
     token1: undefined,
   });
 
-  const {
-    liquidityWrappers,
-    liquiditiesCount,
-    selectedLiquidityWrapper,
-    liquiditiesLoading,
-  } = useDepositedLiquidityWrappers({
+  const data = useDepositedLiquidityWrappers({
     selectedToken0Id: urlState.token0,
     selectedToken1Id: urlState.token1,
   });
+  console.log(data);
 
   return (
     <Page>
