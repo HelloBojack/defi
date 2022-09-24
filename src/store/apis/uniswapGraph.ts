@@ -71,7 +71,11 @@ export const uniswapGraphApi = createApi({
         `,
         variables: { filter: { id_in: poolIds, sqrtPrice_not: "0" } },
       }),
-      transformResponse: (result: any) => result.pools,
+      transformResponse: (result: any) => {
+        console.log("result", result);
+
+        return result.pools;
+      },
     }),
   }),
 });

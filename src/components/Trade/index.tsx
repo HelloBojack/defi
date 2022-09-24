@@ -9,16 +9,15 @@ export const Trade = () => {
     token1: undefined,
   });
 
-  const data = useDepositedLiquidityWrappers({
+  const { depositedLiquidity } = useDepositedLiquidityWrappers({
     selectedToken0Id: urlState.token0,
     selectedToken1Id: urlState.token1,
   });
-  console.log(data);
 
   return (
     <Page>
       <div className="flex h-full space-x-[20px] p-[20px]">
-        <LiquidityMarket />
+        <LiquidityMarket depositedLiquidity={depositedLiquidity} />
       </div>
     </Page>
   );

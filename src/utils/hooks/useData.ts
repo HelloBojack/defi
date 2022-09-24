@@ -1,4 +1,5 @@
 import { skipToken } from "@reduxjs/toolkit/dist/query";
+import { uniqueArray } from "..";
 import {
   useGetDepositedLiquiditiesQuery,
   useGetMarketsQuery,
@@ -28,20 +29,34 @@ export function usePools() {
   const { markets, marketsLoading } = useMarkets();
   const poolIds =
     markets &&
-    tokens
-      ?.map((token) => token.usdPoolId)
-      .concat(markets?.map((market) => market.poolId));
-  console.log(tokens, markets, poolIds);
+    tokens &&
+    uniqueArray(
+      tokens
+        .map((token) => token.usdPoolId)
+        .concat(markets?.map((market) => market.poolId))
+    );
 
-  // const { currentData: pool, isFetching } = useGetPoolsQuery(
-  //   poolIds ? poolIds : skipToken
-  // );
+  const { currentData: pools, isFetching } = useGetPoolsQuery(
+    poolIds ? { poolIds } : skipToken
+  );
+
+  return {
+    pools,
+    poolsLoading: tokensLoading || marketsLoading || (isFetching && !pools),
+  };
 }
 
 export function useDepositedLiquidityWrappers(params: {
   selectedToken0Id?: string;
   selectedToken1Id?: string;
 }) {
-  // useMarkets(params);
-  usePools();
+  const blockNumber = useBlockNumber();
+  const { currentData, isFetching } = useGetDepositedLiquiditiesQuery({
+    blockNumber,
+  });
+
+  return {
+    depositedLiquidity: currentData ? currentData : [],
+    liquidityLoading: isFetching,
+  };
 }
