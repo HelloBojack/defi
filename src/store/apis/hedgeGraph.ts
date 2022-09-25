@@ -157,7 +157,7 @@ export const hedgeGraphApi = createApi({
             liquidityProvider: provider,
             id_in: liquidityIds,
             isOpen: true,
-            deadline_gt: blockNumber,
+            // deadline_gt: blockNumber,
             tickLower_gt: -887220,
             tickUpper_lt: 887220,
           },

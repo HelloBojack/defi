@@ -1,4 +1,5 @@
 import { skipToken } from "@reduxjs/toolkit/dist/query";
+import { useMemo } from "react";
 import { uniqueArray } from "..";
 import {
   useGetDepositedLiquiditiesQuery,
@@ -24,9 +25,13 @@ export function useMarkets(params?: {
   return { markets, marketsLoading: isFetching };
 }
 
-export function usePools() {
+export function usePools(params?: {
+  selectedToken0Id?: string;
+  selectedToken1Id?: string;
+  // selectedMarketId?: string;
+}) {
   const { tokens, tokensLoading } = useTokens();
-  const { markets, marketsLoading } = useMarkets();
+  const { markets, marketsLoading } = useMarkets(params);
   const poolIds =
     markets &&
     tokens &&
@@ -50,13 +55,18 @@ export function useDepositedLiquidityWrappers(params: {
   selectedToken0Id?: string;
   selectedToken1Id?: string;
 }) {
-  const blockNumber = useBlockNumber();
-  const { currentData, isFetching } = useGetDepositedLiquiditiesQuery({
-    blockNumber,
-  });
+  const { pools, poolsLoading } = usePools(params);
+  const { currentData, isFetching } = useGetDepositedLiquiditiesQuery({});
+
+  const depositedLiquidity = useMemo(() => {
+    return currentData?.map((liquidity) => {
+      const pool = pools?.find((pool) => pool.id == liquidity.poolId.uniPool);
+      return { ...liquidity, pool };
+    });
+  }, []);
 
   return {
-    depositedLiquidity: currentData ? currentData : [],
-    liquidityLoading: isFetching,
+    depositedLiquidity,
+    liquidityLoading: isFetching || poolsLoading,
   };
 }

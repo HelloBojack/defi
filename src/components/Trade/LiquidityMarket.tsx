@@ -15,6 +15,10 @@ export const LiquidityMarket = ({
             title: "id",
             dataIndex: "id",
           },
+          {
+            title: "Tokens",
+            // render: (value, record) => <PairIcon pair={record.pool} />,
+          },
         ]}
         rowKey={(record) => record.id}
         dataSource={depositedLiquidity}
