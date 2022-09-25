@@ -60,10 +60,10 @@ export function useDepositedLiquidityWrappers(params: {
 
   const depositedLiquidity = useMemo(() => {
     return currentData?.map((liquidity) => {
-      const pool = pools?.find((pool) => pool.id == liquidity.poolId.uniPool);
+      const pool = pools?.find((pool) => pool.id == liquidity.poolId);
       return { ...liquidity, pool };
     });
-  }, []);
+  }, [pools, currentData]);
 
   return {
     depositedLiquidity,

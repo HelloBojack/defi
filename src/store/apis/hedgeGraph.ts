@@ -173,6 +173,7 @@ export const hedgeGraphApi = createApi({
         result.depositedLiquidities.map((item: any) => ({
           ...item,
           paused: item.paused !== true,
+          poolId: item.poolId.uniPool,
         })),
     }),
   }),

@@ -1,23 +1,18 @@
 import { Table } from "antd";
+import { PairIcon } from "../base/PairIcon";
 
 export const LiquidityMarket = ({
   depositedLiquidity,
 }: {
-  depositedLiquidity: any[];
+  depositedLiquidity?: any[];
 }) => {
-  console.log(depositedLiquidity);
-
   return (
     <div className="w-[280px]">
       <Table
         columns={[
           {
-            title: "id",
-            dataIndex: "id",
-          },
-          {
             title: "Tokens",
-            // render: (value, record) => <PairIcon pair={record.pool} />,
+            render: (_, record) => <PairIcon pair={record.pool} />,
           },
         ]}
         rowKey={(record) => record.id}
