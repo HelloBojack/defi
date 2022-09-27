@@ -1,4 +1,5 @@
 import useUrlState from "@ahooksjs/use-url-state";
+import { useGetPoolsDayDataQuery } from "../../store/apis/uniswapGraph";
 import { useDepositedLiquidityWrappers } from "../../utils/hooks/useData";
 import { Page } from "../common/Page";
 import { LiquidityMarket } from "./LiquidityMarket";
@@ -13,6 +14,9 @@ export const Trade = () => {
     selectedToken0Id: urlState.token0,
     selectedToken1Id: urlState.token1,
   });
+  const data = useGetPoolsDayDataQuery(urlState);
+
+  console.log(data);
 
   return (
     <Page>
