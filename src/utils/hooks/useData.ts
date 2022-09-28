@@ -6,10 +6,7 @@ import {
   useGetMarketsQuery,
   useGetSupportedTokensQuery,
 } from "../../store/apis/hedgeGraph";
-import {
-  useGetPoolsDayDataQuery,
-  useGetPoolsQuery,
-} from "../../store/apis/uniswapGraph";
+import { useGetPoolsQuery } from "../../store/apis/uniswapGraph";
 import useBlockNumber from "./useBlockNumber";
 
 export function useTokens() {
@@ -71,29 +68,5 @@ export function useDepositedLiquidityWrappers(params: {
   return {
     depositedLiquidity,
     liquidityLoading: isFetching || poolsLoading,
-  };
-}
-
-export function usePoolsDayData(params?: {
-  selectedToken0Id?: string;
-  selectedToken1Id?: string;
-}) {
-  const { tokens, tokensLoading } = useTokens();
-  const { markets, marketsLoading } = useMarkets(params);
-  const poolIds =
-    markets &&
-    tokens &&
-    uniqueArray(
-      tokens
-        .map((token) => token.usdPoolId)
-        .concat(markets?.map((market) => market.poolId))
-    );
-
-  const { currentData: poolsDayData, isFetching: poolsLoading } =
-    useGetPoolsDayDataQuery(poolIds);
-
-  return {
-    poolsDayData,
-    poolsDayDataLoadinng: tokensLoading || marketsLoading || poolsLoading,
   };
 }
