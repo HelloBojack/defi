@@ -1,6 +1,9 @@
 import useUrlState from "@ahooksjs/use-url-state";
 import { useGetPoolsDayDataQuery } from "../../store/apis/uniswapGraph";
-import { useDepositedLiquidityWrappers } from "../../utils/hooks/useData";
+import {
+  useDepositedLiquidityWrappers,
+  usePoolsDayData,
+} from "../../utils/hooks/useData";
 import { Page } from "../common/Page";
 import { LiquidityMarket } from "./LiquidityMarket";
 
@@ -10,18 +13,17 @@ export const Trade = () => {
     token1: undefined,
   });
 
-  const { depositedLiquidity } = useDepositedLiquidityWrappers({
+  const { poolsDayData } = usePoolsDayData({
     selectedToken0Id: urlState.token0,
     selectedToken1Id: urlState.token1,
   });
-  const data = useGetPoolsDayDataQuery(urlState);
 
-  console.log(data);
+  console.log(poolsDayData);
 
   return (
     <Page>
       <div className="flex h-full space-x-[20px] p-[20px]">
-        <LiquidityMarket depositedLiquidity={depositedLiquidity} />
+        <LiquidityMarket depositedLiquidity={poolsDayData} />
       </div>
     </Page>
   );

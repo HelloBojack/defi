@@ -75,20 +75,24 @@ export const uniswapGraphApi = createApi({
     }),
 
     getPoolsDayData: builder.query({
-      query: () => ({
+      query: ({ poolIds }) => ({
         document: gql`
           query getPoolDayDatas($filter: PoolDayData_filter) {
             poolDayDatas(where: $filter) {
+              id
               date
               liquidity
               sqrtPrice
+              token0
               token0Price
+              token1
               token1Price
               volumeToken0
               volumeToken1
             }
           }
         `,
+        variables: { filter: { id_in: poolIds, sqrtPrice_not: "0" } },
       }),
     }),
   }),
